@@ -5,7 +5,7 @@ import {
   Shield, Brain, ArrowRight, Sparkles, Lock,
   FileText, Users, HeartHandshake, Scale, Building2, Landmark,
   MessageSquare, AlertCircle, UserCheck, Search, SendHorizonal,
-  ClipboardList, XCircle
+  ClipboardList
 } from "lucide-react";
 
 const GOLD = "#E8B84B";
@@ -286,35 +286,103 @@ export default function DrBen() {
         </div>
       </section>
 
-      {/* ══════════════════════ LIMITES ÉTICOS ══════════════════════ */}
+      {/* ══════════════════════ NÃO SUBSTITUI ATENDIMENTO HUMANO ══════════════════════ */}
       <section className="py-16 text-white" style={{ background: `linear-gradient(135deg,#0b1e35,${NAVY})` }}>
         <div className="container max-w-4xl">
-          <div className="text-center mb-10">
-            <span className="text-xs font-bold uppercase tracking-[0.25em] block mb-3" style={{ color: GOLD }}>Compliance · OAB · LGPD</span>
-            <h2 className="font-serif text-2xl font-bold text-white">
-              O que Dr. Ben <span style={{ color: GOLD }}>nunca fará</span>
+
+          {/* Cabeçalho */}
+          <div className="text-center mb-12">
+            <span className="text-xs font-bold uppercase tracking-[0.25em] block mb-3" style={{ color: GOLD }}>
+              Transparência · OAB · LGPD
+            </span>
+            <h2 className="font-serif text-3xl font-bold text-white mb-4">
+              Dr. Ben <span style={{ color: GOLD }}>não substitui</span> o advogado
             </h2>
-            <p className="text-white/60 text-sm mt-2">Limites absolutos — por ética, por segurança e por respeito ao seu caso.</p>
+            <p className="text-white/60 text-base leading-relaxed max-w-2xl mx-auto">
+              Dr. Ben é um assistente de triagem e primeiro contato. Toda análise jurídica do seu caso
+              será realizada exclusivamente por um advogado especializado do escritório Mauro Monção.
+            </p>
           </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+
+          {/* Cards explicativos */}
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
             {[
-              "Solicitar CPF, CNPJ, RG ou documentos pessoais",
-              "Solicitar número de processo judicial",
-              "Solicitar envio de arquivos ou fotos",
-              "Emitir parecer, opinião ou análise jurídica",
-              "Prometer resultado, prazo ou êxito",
-              "Negar, recusar ou descartar qualquer atendimento",
-            ].map(item => (
-              <div key={item} className="flex items-start gap-3 p-4 rounded-2xl"
-                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(239,68,68,0.25)" }}>
-                <XCircle className="w-5 h-5 shrink-0 mt-0.5" style={{ color: "#ef4444" }} />
-                <span className="text-white/75 text-sm leading-relaxed">{item}</span>
+              {
+                icon: MessageCircle,
+                titulo: "O que Dr. Ben faz",
+                cor: "#22c55e",
+                borda: "rgba(34,197,94,0.25)",
+                itens: [
+                  "Recebe e organiza seu primeiro contato",
+                  "Identifica a área jurídica do seu caso",
+                  "Avalia o nível de urgência",
+                  "Encaminha para o especialista certo",
+                  "Responde dúvidas gerais sobre o escritório",
+                ],
+              },
+              {
+                icon: UserCheck,
+                titulo: "O que o advogado faz",
+                cor: GOLD,
+                borda: `${GOLD}40`,
+                itens: [
+                  "Analisa o caso concreto com profundidade",
+                  "Emite parecer e orientação jurídica",
+                  "Elabora peças e documentos processuais",
+                  "Representa você em juízo ou extrajudicial",
+                  "Assume a responsabilidade técnica pelo caso",
+                ],
+              },
+              {
+                icon: Shield,
+                titulo: "Garantias ao cliente",
+                cor: "#a855f7",
+                borda: "rgba(168,85,247,0.25)",
+                itens: [
+                  "Sigilo absoluto em todas as conversas",
+                  "Conformidade com OAB e LGPD",
+                  "Nenhum dado compartilhado com terceiros",
+                  "Encaminhamento sempre por advogado real",
+                  "Atendimento humanizado em todos os casos",
+                ],
+              },
+            ].map(({ icon: Icon, titulo, cor, borda, itens }) => (
+              <div key={titulo} className="rounded-2xl p-6 flex flex-col gap-4"
+                style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${borda}` }}>
+                <div className="flex items-center gap-3 mb-1">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: `${cor}18` }}>
+                    <Icon className="w-5 h-5" style={{ color: cor }} />
+                  </div>
+                  <h3 className="font-bold text-sm text-white">{titulo}</h3>
+                </div>
+                <ul className="space-y-2">
+                  {itens.map(item => (
+                    <li key={item} className="flex items-start gap-2 text-white/65 text-sm leading-relaxed">
+                      <CheckCircle className="w-3.5 h-3.5 shrink-0 mt-0.5" style={{ color: cor }} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
-          <p className="text-center text-white/40 text-xs mt-8">
-            Conforme Código de Ética e Disciplina da OAB · Lei Geral de Proteção de Dados (LGPD)
-          </p>
+
+          {/* Aviso central */}
+          <div className="rounded-2xl p-6 text-center"
+            style={{ background: `${GOLD}10`, border: `1px solid ${GOLD}30` }}>
+            <Scale className="w-8 h-8 mx-auto mb-3" style={{ color: GOLD }} />
+            <p className="text-white/85 text-sm leading-relaxed max-w-2xl mx-auto">
+              <strong style={{ color: GOLD }}>Importante:</strong> Dr. Ben é uma ferramenta de triagem inteligente.
+              Nenhuma informação fornecida durante o atendimento constitui aconselhamento jurídico formal.
+              A responsabilidade técnica sobre seu caso é sempre de um advogado habilitado do escritório
+              <strong className="text-white"> Mauro Monção Advogados Associados</strong>.
+            </p>
+            <p className="text-white/35 text-xs mt-4">
+              Conforme Código de Ética e Disciplina da OAB · Lei Geral de Proteção de Dados (LGPD)
+            </p>
+          </div>
+
         </div>
       </section>
 
