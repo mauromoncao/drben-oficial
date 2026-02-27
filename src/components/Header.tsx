@@ -4,13 +4,13 @@ import { Menu, X, ChevronDown, Bot, BookOpen } from "lucide-react";
 import { useSettings } from "@/hooks/useSettings";
 
 const blogDropdown = [
-  { href: "/blog",                        label: "Ver todos os Artigos" },
-  { href: "/blog?cat=tributario",         label: "Tributário" },
-  { href: "/blog?cat=previdenciario",     label: "Previdenciário" },
-  { href: "/blog?cat=bancario",           label: "Bancário" },
-  { href: "/blog?cat=imobiliario",        label: "Imobiliário" },
-  { href: "/blog?cat=sucessorio",         label: "Sucessório" },
-  { href: "/blog?cat=consumidor",         label: "Consumidor" },
+  { href: "https://blog.mauromoncao.adv.br",                        label: "Ver todos os Artigos" },
+  { href: "https://blog.mauromoncao.adv.br?cat=tributario",         label: "Tributário" },
+  { href: "https://blog.mauromoncao.adv.br?cat=previdenciario",     label: "Previdenciário" },
+  { href: "https://blog.mauromoncao.adv.br?cat=bancario",           label: "Bancário" },
+  { href: "https://blog.mauromoncao.adv.br?cat=imobiliario",        label: "Imobiliário" },
+  { href: "https://blog.mauromoncao.adv.br?cat=sucessorio",         label: "Sucessório" },
+  { href: "https://blog.mauromoncao.adv.br?cat=consumidor",         label: "Consumidor" },
 ];
 
 const areasDropdown = [
@@ -146,8 +146,8 @@ export default function Header() {
             )}
           </div>
 
-          {/* Soluções Jurídicas — link direto (LPs em construção) */}
-          {navLink("/solucoes-juridicas", "Soluções Jurídicas")}
+          {/* Soluções Jurídicas — domínio oficial */}
+          <a href="https://solucoes.mauromoncao.adv.br" className="text-sm font-medium text-white/85 hover:text-[#E8B84B] transition-colors whitespace-nowrap">Soluções Jurídicas</a>
 
           {navLink("/sobre", "Sobre Nós")}
 
@@ -191,7 +191,9 @@ export default function Header() {
 
           {/* Dr. Ben — Assistente Jurídico IA — destaque dourado */}
           <a
-            href="/assistente-juridico"
+            href="https://drben.mauromoncao.adv.br"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-1.5 bg-[#E8B84B] text-[#19385C] px-3 py-1.5 rounded-full text-xs font-black hover:brightness-110 hover:scale-105 transition-all whitespace-nowrap shadow-md border-2 border-[#E8B84B]"
           >
             <Bot className="w-3.5 h-3.5" />
@@ -249,12 +251,12 @@ export default function Header() {
             {[
               { href: "/", label: "Início" },
               { href: "/areas-de-atuacao", label: "Áreas de Atuação" },
-              { href: "/solucoes-juridicas", label: "Soluções Jurídicas" },
+              { href: "https://solucoes.mauromoncao.adv.br", label: "Soluções Jurídicas" },
               { href: "/sobre", label: "Sobre Nós" },
-              { href: "/blog", label: "Blog" },
+              { href: "https://blog.mauromoncao.adv.br", label: "Blog" },
               { href: "/faq", label: "FAQ" },
               { href: "/contato", label: "Contato" },
-              { href: "/assistente-juridico", label: "🤖 Dr. Ben — Assistente IA" },
+              { href: "https://drben.mauromoncao.adv.br", label: "🤖 Dr. Ben — Assistente IA" },
             ].map((l) => (
               <Link
                 key={l.href}
