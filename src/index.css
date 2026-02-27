@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/* === PALETA OFICIAL MAURO MONÇÃO ===
+   Azul: #19385C
+   Dourado: #E8B84B
+   Fonte título: Cormorant Garamond
+   Fonte corpo: Outfit
+*/
+
+:root {
+  --brand-blue: #19385C;
+  --brand-gold: #E8B84B;
+  --brand-gold-light: #F0CB6E;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  color: #1a1a1a;
+  background: #ffffff;
+}
+
+.font-serif, h1, h2, h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease both;
+}
