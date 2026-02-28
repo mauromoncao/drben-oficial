@@ -56,7 +56,10 @@ export default async function handler(req, res) {
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY;
+  // Tenta variável de ambiente primeiro; usa fallback embutido se não disponível
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY
+    || process.env.OPENAI_API_KEY
+    || "AIzaSyBSwAsFzKQIavG7dd1a1gVQODfNg4V8BHlg";
   if (!GEMINI_API_KEY) {
     return res.status(500).json({ error: "API key not configured", reply: "Desculpe, o assistente está em manutenção. Por favor, fale pelo WhatsApp: (86) 99482-0054" });
   }
