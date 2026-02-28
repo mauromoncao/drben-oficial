@@ -59,7 +59,7 @@ export default function DrBen() {
       <SEOHead
         title="Dr. Ben — Assistente Jurídico com Inteligência Artificial"
         description="Dr. Ben é o assistente jurídico IA do escritório Mauro Monção. Tire dúvidas tributárias, previdenciárias e empresariais de forma rápida e segura."
-        canonical="https://mauromoncao.adv.br/dr-ben"
+        canonical="https://drben.mauromoncao.adv.br"
         keywords="assistente jurídico IA, chatbot advogado, dúvidas jurídicas online, Dr. Ben"
         jsonLd={[
           buildServiceLD({ name: "Dr. Ben — Assistente Jurídico com Inteligência Artificial", description: "Dr. Ben é o assistente jurídico IA do escritório Mauro Monção. Tire dúvidas tributárias, previdenciárias e empresariais de forma rápida e segura.", url: "https://mauromoncao.adv.br/dr-ben" }),
