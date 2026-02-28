@@ -1,4 +1,4 @@
-// Vercel Serverless Function — Dr. Ben Chat
+// Vercel Serverless Function — Dr. Ben Chat (CommonJS)
 // POST /api/chat  { sessionId: string, message: string }
 
 const DR_BEN_SYSTEM_PROMPT = `Você é o Dr. Ben, assistente jurídico digital do escritório Mauro Monção Advogados Associados (OAB/PI · CE · MA), com sede em Parnaíba-PI.
@@ -42,12 +42,17 @@ Encerre gentilmente.
 - NUNCA recuse ou descarte um atendimento
 - Responda SEMPRE em português brasileiro
 - Seja cordial, profissional e objetivo
-- Mensagens curtas (máx. 3 parágrafos por resposta)`;
+- Mensagens curtas (máx. 3 parágrafos por resposta)
+- Quando coletar nome e telefone, inclua no final: [CONTACT:{"name":"...","phone":"..."}]
+- Quando identificar a área jurídica, inclua: [AREA:tributario|previdenciario|bancario|imobiliario|familia|publico|trabalhista|consumidor|outros]
+- Quando avaliar urgência, inclua: [URGENCY:low|medium|high|critical]`;
 
-// In-memory session store (funciona em serverless com warm instances)
-const memStore = new Map();
+// In-memory session store
+if (!global.__drbenSessions) {
+  global.__drbenSessions = new Map();
+}
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // CORS
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -56,18 +61,16 @@ export default async function handler(req, res) {
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-  // Tenta variável de ambiente primeiro; usa fallback embutido se não disponível
+  // API Key — env var com fallback embutido
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY
     || process.env.OPENAI_API_KEY
     || "AIzaSyBSwAsFzKQIavG7dd1a1gVQODfNg4V8BHlg";
-  if (!GEMINI_API_KEY) {
-    return res.status(500).json({ error: "API key not configured", reply: "Desculpe, o assistente está em manutenção. Por favor, fale pelo WhatsApp: (86) 99482-0054" });
-  }
 
+  // Parse body
   let body;
   try {
     body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-  } catch {
+  } catch (e) {
     return res.status(400).json({ error: "Invalid JSON" });
   }
 
@@ -76,23 +79,24 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "sessionId and message are required" });
   }
 
-  // Get or create session
-  if (!memStore.has(sessionId)) {
-    memStore.set(sessionId, []);
+  // Get or create session history
+  const sessions = global.__drbenSessions;
+  if (!sessions.has(sessionId)) {
+    sessions.set(sessionId, []);
   }
-  const history = memStore.get(sessionId);
+  const history = sessions.get(sessionId);
 
-  // Add user message to history
+  // Add user message
   history.push({ role: "user", parts: [{ text: message }] });
 
-  // Build Gemini request
+  // Build Gemini API request
   const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
   const payload = {
     system_instruction: {
       parts: [{ text: DR_BEN_SYSTEM_PROMPT }]
     },
-    contents: history.slice(-20), // últimas 20 mensagens para contexto
+    contents: history.slice(-20),
     generationConfig: {
       maxOutputTokens: 512,
       temperature: 0.7,
@@ -102,33 +106,33 @@ export default async function handler(req, res) {
   let aiText = "Desculpe, estou com uma instabilidade técnica no momento. Por favor, fale diretamente com nossa equipe pelo WhatsApp: (86) 99482-0054";
 
   try {
-    const geminiRes = await fetch(geminiUrl, {
+    const response = await fetch(geminiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
 
-    if (!geminiRes.ok) {
-      const errText = await geminiRes.text();
-      console.error("[DrBen] Gemini error:", geminiRes.status, errText);
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error("[DrBen] Gemini HTTP error:", response.status, errText.slice(0, 200));
     } else {
-      const data = await geminiRes.json();
-      const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (candidate) aiText = candidate;
+      const data = await response.json();
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (text) aiText = text;
     }
   } catch (err) {
-    console.error("[DrBen] fetch error:", err);
+    console.error("[DrBen] fetch error:", err.message);
   }
 
-  // Save assistant response to history
+  // Save assistant reply to history
   history.push({ role: "model", parts: [{ text: aiText }] });
 
-  // Clean markers from response shown to user
-  const cleanResponse = aiText
-    .replace(/\[CONTACT:\{[^}]+\}\]/g, "")
-    .replace(/\[AREA:[\w]+\]/g, "")
+  // Clean internal markers before sending to client
+  const cleanReply = aiText
+    .replace(/\[CONTACT:\{[^}]*\}\]/g, "")
+    .replace(/\[AREA:[\w|]+\]/g, "")
     .replace(/\[URGENCY:[\w]+\]/g, "")
     .trim();
 
-  return res.status(200).json({ reply: cleanResponse });
-}
+  return res.status(200).json({ reply: cleanReply });
+};
