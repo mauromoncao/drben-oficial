@@ -5,7 +5,7 @@ module.exports = function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Content-Type", "application/json");
 
-  const key = process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY || "";
+  const key = process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY || "AIzaSyDmYk9RUBjrCQe1vv9g69k87P51Ke_CZHY";
 
   return res.status(200).json({
     hasKey: key.length > 0,

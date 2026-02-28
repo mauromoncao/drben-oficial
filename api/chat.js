@@ -64,7 +64,7 @@ module.exports = async function handler(req, res) {
   // API Key — env var com fallback embutido
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY
     || process.env.OPENAI_API_KEY
-    || "AIzaSyBSwAsFzKQIavG7dd1a1gVQODfNg4V8BHlg";
+    || "AIzaSyDmYk9RUBjrCQe1vv9g69k87P51Ke_CZHY";
 
   // Parse body
   let body;
@@ -90,7 +90,7 @@ module.exports = async function handler(req, res) {
   history.push({ role: "user", parts: [{ text: message }] });
 
   // Build Gemini API request
-  const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+  const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
   const payload = {
     system_instruction: {
@@ -98,7 +98,7 @@ module.exports = async function handler(req, res) {
     },
     contents: history.slice(-20),
     generationConfig: {
-      maxOutputTokens: 512,
+      maxOutputTokens: 1024,
       temperature: 0.7,
     }
   };
