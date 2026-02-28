@@ -1,0 +1,24 @@
+{
+  "name": "Dr. Ben — Assistente Jurídico IA",
+  "short_name": "Dr. Ben",
+  "description": "Mauro Monção Advogados Associados — OAB/PI · CE · MA",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a2744",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
