@@ -3,8 +3,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/api/chat",   "destination": "/api/chat.cjs" },
-    { "source": "/api/debug",  "destination": "/api/debug.cjs" },
+    { "source": "/api/:path*", "destination": "/api/:path*" },
     { "source": "/(.*)",       "destination": "/index.html" }
   ],
   "headers": [
