@@ -98,7 +98,7 @@ module.exports = async function handler(req, res) {
     },
     contents: history.slice(-20),
     generationConfig: {
-      maxOutputTokens: 1024,
+      maxOutputTokens: 8192,
       temperature: 0.7,
     }
   };
