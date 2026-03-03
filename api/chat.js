@@ -100,7 +100,7 @@ async function maraAvisarDrMauro({ nome, telefone, area, urgencia, resumo }) {
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'apikey': EVOLUTION_KEY },
-        body: JSON.stringify({ number: DR_MAURO_WHATSAPP, text: msg }),
+        body: JSON.stringify({ number: DR_MAURO_WHATSAPP, textMessage: { text: msg } }),
       }
     );
 
