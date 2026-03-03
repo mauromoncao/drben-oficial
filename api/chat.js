@@ -52,10 +52,10 @@ Encerre gentilmente.
 - Quando avaliar urgência, inclua: [URGENCY:low|medium|high|critical]`;
 
 // ── Configuração Evolution API (VPS Hostinger) ───────────────
-const EVOLUTION_URL      = 'http://181.215.135.202:8080';
-const EVOLUTION_KEY      = 'BenEvolution2026';
-const EVOLUTION_INSTANCE = 'drben';
-const DR_MAURO_WHATSAPP  = '5586999484761'; // número do Dr. Mauro
+const EVOLUTION_URL      = process.env.EVOLUTION_API_URL      || 'http://181.215.135.202:8080';
+const EVOLUTION_KEY      = process.env.EVOLUTION_API_KEY      || '';
+const EVOLUTION_INSTANCE = process.env.EVOLUTION_INSTANCE     || 'drben';
+const DR_MAURO_WHATSAPP  = process.env.DR_MAURO_WHATSAPP      || '5586999484761';
 
 // ── MARA IA — Envia aviso ao Dr. Mauro via WhatsApp ─────────
 async function maraAvisarDrMauro({ nome, telefone, area, urgencia, resumo }) {
