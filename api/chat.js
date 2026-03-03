@@ -147,8 +147,7 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST')    return res.status(405).json({ error: 'Method not allowed' });
 
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY
-    || process.env.OPENAI_API_KEY
-    || 'AIzaSyDmYk9RUBjrCQe1vv9g69k87P51Ke_CZHY';
+    || process.env.OPENAI_API_KEY;
 
   let body;
   try {
