@@ -3,3 +3,10 @@ dist/
 .env
 .env.local
 *.log
+
+# Segurança adicional
+secrets/
+credentials/
+private/
+*.pem
+*.key

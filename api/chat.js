@@ -1,4 +1,4 @@
-// Vercel Serverless Function — Dr. Ben Chat (CommonJS)
+// Cloudflare Pages Function — Dr. Ben Chat
 // POST /api/chat  { sessionId: string, message: string }
 //
 // DR. BEN   = Assistente Jurídico — atende os CLIENTES no site
